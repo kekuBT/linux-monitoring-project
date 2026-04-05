@@ -1,7 +1,11 @@
 #!/bin/bash
 
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SYSTEM_LOG="$BASE_DIR/logs/system_health.log"
+ALERT_LOG="$BASE_DIR/logs/alerts.log"
+
 cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk -F',' '{print 100 - $4}' | awk '{print $1}')
-mem_usage=$(free | awk '/Mem:/ {printf("%.2f"), $3/$2 * 100}')
+mem_usage=$(free | awk '/Mem:/ {printf("%.2f", $3/$2 * 100)}')
 disk_usage=$(df / | awk 'NR==2 {gsub("%", ""); print $5}')
 
 get_status() {
@@ -26,7 +30,7 @@ log_alert_if_needed() {
     local timestamp=$4
 
     if [[ "$metric_status" == "WARN" || "$metric_status" == "CRITICAL" ]]; then
-        echo "[$timestamp] ALERT: $metric_name is at ${metric_value}% ($metric_status)" >> logs/alerts.log
+        echo "[$timestamp] ALERT: $metric_name is at ${metric_value}% ($metric_status)" >> "$ALERT_LOG"
     fi
 }
 
@@ -41,7 +45,7 @@ echo "[$disk_status] Disk: ${disk_usage}%"
 timestamp=$(date '+%Y-%m-%d %H:%M:%S')
 
 log_entry="[$timestamp] CPU: ${cpu_usage}% (${cpu_status}) | Memory: ${mem_usage}% (${mem_status}) | Disk: ${disk_usage}% (${disk_status})"
-echo "$log_entry" >> logs/system_health.log
+echo "$log_entry" >> "$SYSTEM_LOG"
 
 log_alert_if_needed "CPU" "$cpu_usage" "$cpu_status" "$timestamp"
 log_alert_if_needed "Memory" "$mem_usage" "$mem_status" "$timestamp"
