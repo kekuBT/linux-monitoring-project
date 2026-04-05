@@ -19,6 +19,17 @@ get_status() {
 
 }
 
+log_alert_if_needed() {
+    local metric_name=$1
+    local metric_value=$2
+    local metric_status=$3
+    local timestamp=$4
+
+    if [[ "$metric_status" == "WARN" || "$metric_status" == "CRITICAL" ]]; then
+        echo "[$timestamp] ALERT: $metric_name is at ${metric_value}% ($metric_status)" >> logs/alerts.log
+    fi
+}
+
 cpu_status=$(get_status "$cpu_usage" 70 85)
 mem_status=$(get_status "$mem_usage" 70 85)
 disk_status=$(get_status "$disk_usage" 80 90)
@@ -30,5 +41,8 @@ echo "[$disk_status] Disk: ${disk_usage}%"
 timestamp=$(date '+%Y-%m-%d %H:%M:%S')
 
 log_entry="[$timestamp] CPU: ${cpu_usage}% (${cpu_status}) | Memory: ${mem_usage}% (${mem_status}) | Disk: ${disk_usage}% (${disk_status})"
-
 echo "$log_entry" >> logs/system_health.log
+
+log_alert_if_needed "CPU" "$cpu_usage" "$cpu_status" "$timestamp"
+log_alert_if_needed "Memory" "$mem_usage" "$mem_status" "$timestamp"
+log_alert_if_needed "Disk" "$disk_usage" "$disk_status" "$timestamp"
