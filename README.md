@@ -1,96 +1,119 @@
-Gemini said
-Linux System Monitoring & Alerting Tool
+Let's format this better for readme
+
+# Linux System Monitoring & Alerting Tool
+
 A lightweight Linux monitoring system built using Bash that tracks CPU, memory, and disk usage, logs system health over time, and generates alerts based on predefined thresholds.
 
-Features
-Real-time Monitoring: Tracks CPU usage, Memory availability, and Disk consumption.
+---
 
-Health Status Classification:
+## Features
 
-OK: System within normal limits.
+- Real-time monitoring of:
+  - CPU usage
+  - Memory usage
+  - Disk usage
+- Health status classification:
+  - OK
+  - WARN
+  - CRITICAL
+- Persistent logging of system metrics
+- Alert logging for abnormal conditions
+- Automated execution using cron
+- Log analysis tool for extracting system insights
 
-WARN: Metrics exceed 70% usage.
+---
 
-CRITICAL: Metrics exceed 90% usage.
+## Tech Stack
 
-Data Persistence: Records all system metrics to system_health.log.
+- Bash scripting
+- Linux CLI tools (`top`, `free`, `df`, `awk`, `grep`)
+- Cron (job scheduling)
 
-Alert Logging: Segregates abnormal conditions into alerts.log for quick review.
+---
 
-Automation: Designed for seamless execution via cron jobs.
-
-Analysis Tool: Includes a script to extract peak performance metrics and total incident counts.
-
-Tech Stack
-Language: Bash Scripting
-
-Core Utilities: awk, grep, top, free, df
-
-Automation: Cron (Job Scheduling)
-
-Project Structure
-Plaintext
+## Project Structure
+```bash
 linux-monitoring-project/
 ├── scripts/
-│   ├── monitor.sh        # Resource collection and threshold logic
-│   └── analyze_logs.sh   # Log parser for system insights
+│ ├── monitor.sh
+│ └── analyze_logs.sh
 ├── logs/
-│   ├── system_health.log # Historical data
-│   ├── alerts.log        # Warnings and critical events
-│   └── cron_debug.log    # Cron execution logs
+│ ├── system_health.log
+│ ├── alerts.log
+│ └── cron_debug.log
 └── README.md
-Setup and Usage
-1. Clone the Repository
-Bash
+```
+
+---
+
+## How It Works
+
+### Monitoring Script (`monitor.sh`)
+- Collects CPU, memory, and disk usage
+- Evaluates each metric against thresholds
+- Logs system health to `system_health.log`
+- Logs warnings and critical events to `alerts.log`
+
+### Automation
+- Uses cron to run the monitoring script every minute
+
+### Analysis Script (`analyze_logs.sh`)
+- Counts total log entries
+- Counts total alerts
+- Extracts maximum CPU, memory, and disk usage from logs
+
+---
+
+## Setup & Usage
+
+### 1. Clone the repository
+
+```bash
 git clone <your-repo-url>
 cd linux-monitoring-project
-2. Make Scripts Executable
-Bash
-chmod +x scripts/*.sh
-3. Manual Execution
-To run a single check immediately:
-
-Bash
+```
+2. Make scripts executable
+```bash
+chmod +x scripts/monitor.sh
+chmod +x scripts/analyze_logs.sh
+```
+3. Run manually
+```bash
 ./scripts/monitor.sh
-4. Set Up Automation
-To run the monitor every minute, add it to your crontab:
-
-Open the editor: crontab -e
-
-Add the following line (use the absolute path to your project):
-
-Bash
-* * * * * /bin/bash /absolute/path/to/scripts/monitor.sh
-5. View System Logs
-Bash
-tail -f logs/system_health.log
+```
+4. Set up cron job
+```bash
+crontab -e
+```
+Add:
+```bash
+* * * * * /bin/bash /path-to-project/scripts/monitor.sh
+```
+5. View logs
+```bash
+cat logs/system_health.log
 cat logs/alerts.log
-6. Analyze Captured Data
-Run the analysis script to see peak usage:
-
-Bash
+```
+6. Analyze logs
+```bash
 ./scripts/analyze_logs.sh
+```
 Example Output
-Log Format:
-
-Plaintext
+```bash
 [OK] CPU: 1.1%
 [OK] Memory: 14.41%
 [OK] Disk: 9%
-Analysis Summary:
 
-Plaintext
 ===== SYSTEM ANALYSIS =====
 Total log entries: 56
 Total alerts: 1
-Max CPU usage: 85%
+Max CPU usage: 100%
 Max Memory usage: 16.98%
 Max Disk usage: 9%
-Lessons Learned
-Bash Scripting: Developing logic for resource tracking and conditional alerting.
 
-Automation: Configuring cron jobs and handling absolute vs. relative pathing in headless environments.
-
-Data Parsing: Using awk and grep to transform raw CLI output into structured log data.
-
-Environment Stability: Managing permissions and directory structures for reliable background execution.
+What I Learned
+Writing reliable Bash scripts for system monitoring
+Automating tasks using cron jobs
+Parsing and analyzing log data using awk and grep
+Handling real-world issues like path resolution and environment differences in cron
+```
