@@ -1,5 +1,3 @@
-Let's format this better for readme
-
 # Linux System Monitoring & Alerting Tool
 
 A lightweight Linux monitoring system built using Bash that tracks CPU, memory, and disk usage, logs system health over time, and generates alerts based on predefined thresholds.
