@@ -30,7 +30,7 @@ A lightweight Linux monitoring system built using Bash that tracks CPU, memory, 
 ---
 
 ## Project Structure
-linux-monitoring-project/
+```linux-monitoring-project/
 ├── scripts/
 │ ├── monitor.sh
 │ └── analyze_logs.sh
@@ -39,7 +39,7 @@ linux-monitoring-project/
 │ ├── alerts.log
 │ └── cron_debug.log
 └── README.md
-
+```
 
 ---
 
