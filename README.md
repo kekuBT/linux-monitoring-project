@@ -68,27 +68,35 @@ A lightweight Linux monitoring system built using Bash that tracks CPU, memory, 
 ```bash
 git clone <your-repo-url>
 cd linux-monitoring-project
-
+```
 2. Make scripts executable
+```bash
 chmod +x scripts/monitor.sh
 chmod +x scripts/analyze_logs.sh
-
-3. Run manually
+```
+4. Run manually
+```bash
 ./scripts/monitor.sh
-4. Set up cron job
+```
+6. Set up cron job
+```bash
 crontab -e
-
+```
 Add:
-
+```bash
 * * * * * /bin/bash /path-to-project/scripts/monitor.sh
+```
 5. View logs
+```bash
 cat logs/system_health.log
 cat logs/alerts.log
-
-6. Analyze logs
+```
+7. Analyze logs
+```bash
 ./scripts/analyze_logs.sh
-
+```
 Example Output
+```bash
 [OK] CPU: 1.1%
 [OK] Memory: 14.41%
 [OK] Disk: 9%
