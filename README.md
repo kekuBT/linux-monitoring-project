@@ -108,10 +108,9 @@ Total alerts: 1
 Max CPU usage: 100%
 Max Memory usage: 16.98%
 Max Disk usage: 9%
-
-What I Learned
+```
+### What I Learned
 Writing reliable Bash scripts for system monitoring
 Automating tasks using cron jobs
 Parsing and analyzing log data using awk and grep
 Handling real-world issues like path resolution and environment differences in cron
-```
