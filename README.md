@@ -1,5 +1,3 @@
-Let's format this better for readme
-
 # Linux System Monitoring & Alerting Tool
 
 A lightweight Linux monitoring system built using Bash that tracks CPU, memory, and disk usage, logs system health over time, and generates alerts based on predefined thresholds.
@@ -32,6 +30,7 @@ A lightweight Linux monitoring system built using Bash that tracks CPU, memory, 
 ---
 
 ## Project Structure
+```bash
 linux-monitoring-project/
 ├── scripts/
 │ ├── monitor.sh
@@ -41,7 +40,7 @@ linux-monitoring-project/
 │ ├── alerts.log
 │ └── cron_debug.log
 └── README.md
-
+```
 
 ---
 
@@ -70,27 +69,35 @@ linux-monitoring-project/
 ```bash
 git clone <your-repo-url>
 cd linux-monitoring-project
-
+```
 2. Make scripts executable
+```bash
 chmod +x scripts/monitor.sh
 chmod +x scripts/analyze_logs.sh
-
+```
 3. Run manually
+```bash
 ./scripts/monitor.sh
+```
 4. Set up cron job
+```bash
 crontab -e
-
+```
 Add:
-
+```bash
 * * * * * /bin/bash /path-to-project/scripts/monitor.sh
+```
 5. View logs
+```bash
 cat logs/system_health.log
 cat logs/alerts.log
-
+```
 6. Analyze logs
+```bash
 ./scripts/analyze_logs.sh
-
+```
 Example Output
+```bash
 [OK] CPU: 1.1%
 [OK] Memory: 14.41%
 [OK] Disk: 9%
@@ -101,8 +108,8 @@ Total alerts: 1
 Max CPU usage: 100%
 Max Memory usage: 16.98%
 Max Disk usage: 9%
-
-What I Learned
+```
+### What I Learned
 Writing reliable Bash scripts for system monitoring
 Automating tasks using cron jobs
 Parsing and analyzing log data using awk and grep
